@@ -8,4 +8,4 @@ const openaiInstance = new OpenAIApi(configuration)
 
 export default openaiInstance
 
-export const model = 'text-davinci-003'
+export const model = 'gpt-3.5-turbo'

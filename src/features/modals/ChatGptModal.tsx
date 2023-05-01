@@ -82,20 +82,20 @@ const ChatGptModal = NiceModal.create<ConfirmModalProps>(
     const talkToAI = useCallback(
       async (text) => {
         // Insert message at first element.
-        const response = await openaiInstance.createCompletion({
+        const response = await openaiInstance.createChatCompletion({
           model: model,
-          prompt: `For a form generate a JSONSchema that meets the following requirements: ${text}`,
-          max_tokens: 600,
+          messages: [{ role: 'user', content: `For a form generate a JSONSchema that meets the following requirements: ${text}`}],
+          max_tokens: 2000,
         })
         console.log(response.data)
         // Append AI message.
-        setResponse(response.data.choices[0].text)
-        const titleResponse = await openaiInstance.createCompletion({
+        setResponse(response.data.choices[0].message.content)
+        const titleResponse = await openaiInstance.createChatCompletion({
           model: model,
-          prompt: `The headline or title that summarizes the following form: ${text}`,
+          messages:[ { role: 'user', content:`The headline or title that summarizes the following form: ${text}`}],
           max_tokens: 50,
         })
-        setFormTitle(titleResponse.data.choices[0].text)
+        setFormTitle(titleResponse.data.choices[0].message.content)
         setLoading(false)
       },
       [setResponse, setFormTitle, setLoading]
