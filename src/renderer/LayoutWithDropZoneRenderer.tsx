@@ -156,19 +156,19 @@ const LayoutElement = ({
             />
           )}
         </Paper>
+        <Box
+            sx={{
+              border: 'none',
+              opacity: isOver ? '1.0' : '0.1',
+              minWidth: '2em',
+              minHeight: '1.5em',
+              bgcolor: (theme) => (isOver ? theme.palette.grey[100] : 'none'),
+            }}
+            ref={dropRef2}
+        >
+          {isOver && isOverCurrent && draggedMeta ? <DropTargetFormsPreview metadata={draggedMeta} /> : null}
+        </Box>
       </Grid>
-      <Box
-        sx={{
-          border: 'none',
-          opacity: isOver ? '1.0' : '0.1',
-          minWidth: '2em',
-          minHeight: '1.5em',
-          bgcolor: (theme) => (isOver ? theme.palette.grey[100] : 'none'),
-        }}
-        ref={dropRef2}
-      >
-        {isOver && isOverCurrent && draggedMeta ? <DropTargetFormsPreview metadata={draggedMeta} /> : null}
-      </Box>
     </>
   )
 }

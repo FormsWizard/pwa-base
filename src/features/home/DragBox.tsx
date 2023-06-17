@@ -1,14 +1,13 @@
 import React from 'react'
 import { useDrag } from 'react-dnd'
-import { Card, CardActionArea, CardContent, Grid, Typography } from '@mui/material'
-import { DraggableComponent } from '../wizard/WizardSlice'
-import { Check, LineAxisTwoTone } from '@mui/icons-material'
+import { Card, CardActionArea, CardContent, Typography } from '@mui/material'
+import {DraggableMeta} from '../wizard/WizardSlice'
 import { Stack } from '@mui/system'
 
 type DragBoxProps = {
   name: string
   img?: string
-  componentMeta: DraggableComponent
+  componentMeta: Partial<DraggableMeta>
   ToolIcon: any
 }
 const DragBox = ({ name = 'Eingabefeld', img = '', componentMeta, ToolIcon = () => <></> }: DragBoxProps) => {
@@ -35,7 +34,7 @@ const DragBox = ({ name = 'Eingabefeld', img = '', componentMeta, ToolIcon = () 
           <Stack direction="row" alignItems="center" gap={2}>
             <ToolIcon></ToolIcon>
             <Typography gutterBottom variant="subtitle1">
-              {name}
+              {name || ''}
             </Typography>
           </Stack>
         </CardContent>
