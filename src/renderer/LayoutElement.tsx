@@ -14,7 +14,16 @@ import { JsonFormsDispatch, useJsonForms } from '@jsonforms/react'
 import { Box, Grid, IconButton, Paper, Typography } from '@mui/material'
 import Ajv from 'ajv'
 import isEmpty from 'lodash/isEmpty'
-import React, { ComponentType, FC, MouseEventHandler, ReactNode, useCallback, useEffect, useMemo } from 'react'
+import React, {
+  ComponentType,
+  FC,
+  MouseEventHandler,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { useDragLayer, useDrop } from 'react-dnd'
 import { useAppDispatch } from '../app/hooks/reduxHooks'
 import { selectEditMode, selectElement, selectPath, selectSelectedElementKey } from '../features/wizard/WizardSlice'
@@ -103,7 +112,7 @@ const LayoutElement = ({
   const [{ isOver: isOver1, isOverCurrent: isOverCurrent1 }, dropRef] = useDrop(handleAllDrop, [handleAllDrop])
   const [{ isOver: isOver2, isOverCurrent: isOverCurrent2 }, dropRef2] = useDrop(handleAllDrop, [handleAllDrop])
   const [{ isOver: isOver3, isOverCurrent: isOverCurrent3 }, dropRef3] = useDrop(handleDropAtStart, [handleAllDrop])
-  const isOver = isOver1 || isOver2
+
   const isOverCurrent = isOverCurrent1 || isOverCurrent2
   const handleSelect = useCallback(
     (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -197,28 +206,31 @@ const LayoutElement = ({
 }
 
 function LayoutDropArea({ isOverCurrent, dropRef, anythingDragging }) {
-  const [dragging, setDragging, cancel] = useDelkayedState(false, { delay: 1, delayedValue: true })
+  // const [dragging, setDragging, cancel] = useDelkayedState(false, { delay: 1yar, delayedValue: true })
+  // const [dragging, setDragging] = useState(false)
 
-  useEffect(() => {
-    setDragging(anythingDragging)
-    if (anythingDragging !== dragging && !anythingDragging) {
-      cancel(false)
-    }
-  }, [anythingDragging])
+  // useEffect(() => {
+  //   setDragging(anythingDragging)
+  //   if (anythingDragging !== dragging && !anythingDragging) {
+  //     // cancel(false)
+  //   }
+  // }, [anythingDragging])
 
   return (
     <Box
       sx={{
         opacity: isOverCurrent ? '1.0' : '0.3',
-        display: dragging ? 'block' : 'none',
+        display: 'block',
       }}
       ref={dropRef}
     >
       <Box
-        className={classnames({ 'is-over-dropzone': isOverCurrent })}
+        className={classnames('is-dropzone', { 'is-over-dropzone': isOverCurrent })}
         sx={{
           display: 'flex',
-          borderRadius: 4,
+          border: anythingDragging ? `1px dashed darkgray` : 'none',
+          borderRadius: '5px',
+          boxSizing: 'border-box',
           height: '1.5em',
           textAlign: 'center',
           verticalAlign: 'middle',
@@ -228,6 +240,7 @@ function LayoutDropArea({ isOverCurrent, dropRef, anythingDragging }) {
         <Typography
           sx={{
             margin: 'auto',
+            opacity: anythingDragging ? '1.0' : '0',
           }}
         >
           drop here
