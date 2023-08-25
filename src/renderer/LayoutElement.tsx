@@ -82,7 +82,7 @@ const LayoutElement = ({
   const rootSchema = getSchema(state)
   //const rootData = getData(state)
   const dispatch = useAppDispatch()
-  const editMode = useSelector(selectEditMode)
+  
   const selectedKey = useSelector(selectSelectedElementKey)
   const controlName = useMemo<string | undefined>(
       () => (child.type === 'Control' ? composeWithUi(child as ControlElement, path) : undefined),

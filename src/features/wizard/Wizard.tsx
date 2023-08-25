@@ -17,6 +17,7 @@ import { useDragDropManager } from 'react-dnd'
 import {TrashFAB} from "../TrashDroparea/TrashFAB";
 import { useSelector } from 'react-redux'
 import { getpreviewModus } from '../AppBar/AppBarSlice'
+import { getExtendedUiSchemaWithPath } from './WizardSliceSelectors'
 
 function Wizard() {
   const wizardPaperRef = useRef<null | HTMLDivElement>(null)
@@ -30,7 +31,9 @@ function Wizard() {
   const jsonSchema = useAppSelector(selectJsonSchema)
   const uiSchema = useAppSelector(selectUiSchema)
 
-  const uiSchemaWithPath = useMemo(() => extendUiSchemaWithPath(uiSchema), [uiSchema])
+//  const uiSchemaWithPath = useMemo(() => extendUiSchemaWithPath(uiSchema), [uiSchema])
+  const uiSchemaWithPath = useSelector(getExtendedUiSchemaWithPath)
+
   const listRef = useRef<null | HTMLDivElement>(null)
   const { updatePosition } = useScroll(listRef)
 

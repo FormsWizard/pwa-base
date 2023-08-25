@@ -343,7 +343,8 @@ export const jsonFormsEditSlice = createSlice({
         oldUISchemaElements = getParentUISchemaElements(path, state.uiSchema),
         elIndex = parseInt(pathSegments[pathSegments.length - 1]),
         targetIndex = elIndex + (placeBefore ? 0 : 1)
-      if (isNaN(elIndex)) {
+      
+        if (isNaN(elIndex)) {
         console.error('cannot get the index of the current ui element, dropped on, the path is', path)
         return
       }
@@ -371,7 +372,13 @@ export const jsonFormsEditSlice = createSlice({
           true
         )
       }
-      oldUISchemaElements.splice(targetIndex, 0, uiSchema)
+    
+    
+    oldUISchemaElements.splice(targetIndex, 0, uiSchema)
+    let newSelection = [...pathSegments]; 
+    newSelection[newSelection.length - 1] = targetIndex+"";
+    state.selectedPath = newSelection.join(".")
+
       // buildSchemaFromUISchema(state.uiSchema)
     },
 
@@ -420,6 +427,7 @@ export const jsonFormsEditSlice = createSlice({
     },
   },
 })
+
 
 export const {
   insertControl,

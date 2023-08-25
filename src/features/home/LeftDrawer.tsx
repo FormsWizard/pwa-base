@@ -28,6 +28,7 @@ export default function LeftDrawer() {
 
   const dispatch = useAppDispatch()
   const previewModus = useSelector(getpreviewModus)
+
   const handleTogglePreview = (event: any) => {
     dispatch(togglePreviewModus())
   }

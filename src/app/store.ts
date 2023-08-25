@@ -4,6 +4,7 @@ import jsonFormsEditReducer from '../features/wizard/WizardSlice'
 import templateSlice from '../features/wizard/TemplateSlice'
 import AppBarSlice from '../features/AppBar/AppBarSlice'
 import buildingBlocksSlice from '../features/buildingBlocks/buildingBlocksSlice'
+import listenerMiddleware from './reduxMiddleware/autoSelectNewFields'
 
 export const store = configureStore({
   reducer: {
@@ -12,11 +13,13 @@ export const store = configureStore({
     template: templateSlice,
     AppBar: AppBarSlice,
     buildingBlocks: buildingBlocksSlice,
+
   },
+  middleware: (getDefaultMiddleware) =>
+  getDefaultMiddleware().prepend(listenerMiddleware.middleware),
 })
 
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>
 
-function jsonformsgarbagemiddleware() {}

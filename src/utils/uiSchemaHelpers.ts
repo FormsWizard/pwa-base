@@ -63,6 +63,16 @@ export const getAllScopesInSchema = (uiSchema: UISchemaElement) => {
   })
   return scopes
 }
+
+export const getAllPathsFromSchema = (uiSchema: UISchemaElementWithPath) => {
+  let paths = []
+  recursivelyMapSchema(uiSchema, (ui: UISchemaElementWithPath) => {
+    ui.path && paths.push(ui.path)
+    return ui
+  })
+  return paths
+}
+
 export const removeUISchemaElement = (scope: string, uiSchema: UISchemaElement) => {
   return recursivelyMapSchema(uiSchema, (uischema) => {
     if (isLayout(uischema) && uischema.elements.find((el: ScopableUISchemaElement) => el.scope === scope)) {

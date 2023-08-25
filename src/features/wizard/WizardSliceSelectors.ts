@@ -1,7 +1,10 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { RootState } from '../../app/store'
 
+import { extendUiSchemaWithPath } from '../../utils/uiSchemaHelpers'
+
 export const selectJsonSchema = (state: RootState) => state.jsonFormsEdit.jsonSchema
+export const selectUiSchema = (state: RootState) => state.jsonFormsEdit.uiSchema
 
 export const selectSelectedElementKey = (state: RootState) => state.jsonFormsEdit.selectedElementKey
 
@@ -18,7 +21,15 @@ const selectSelectedElementJsonSchema = createSelector(
   }
 )
 
-export { selectSelectedElementJsonSchema }
+
+
+const getExtendedUiSchemaWithPath = createSelector(
+  selectUiSchema,
+  (uiSchema) => extendUiSchemaWithPath(uiSchema)
+)
+
+
+export { selectSelectedElementJsonSchema, getExtendedUiSchemaWithPath }
 
 function getJsonSchemaByPath(jsonSchema, path) {
   const pathArray = path.split('.')
@@ -31,4 +42,5 @@ function getJsonSchemaByPath(jsonSchema, path) {
   }, jsonSchema)
   return selectedElement
 }
+
 
